@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Turminha Animal</title>
+
+  <style>
+    :root {
+      --preto: #000000;
+      --preto-suave: #111111;
+      --cinza-escuro: #292929;
+      --cinza: #777777;
+      --cinza-claro: #dddddd;
+      --cinza-fundo: #f2f2f2;
+      --branco: #ffffff;
+      --texto: #111111;
+      --sombra: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background:
+        radial-gradient(circle at top left, #555555 0, transparent 30%),
+        linear-gradient(135deg, #000000, #292929);
+    }
+
+    header {
+      padding: 34px 20px 38px;
+      text-align: center;
+      color: var(--branco);
+      background: linear-gradient(135deg, #000000, #333333);
+      border-bottom: 4px solid var(--branco);
+      border-bottom-left-radius: 35px;
+      border-bottom-right-radius: 35px;
+      box-shadow: var(--sombra);
+    }
+.watermark-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(260px, 80vw);
+  min-height: 80px;
+  margin-bottom: 20px;
+  padding: 10px 18px;
+  background: var(--branco);
+  border: 2px solid var(--branco);
+  border-radius: 18px;
+  box-shadow: var(--sombra);
+}
+
+.watermark-top img {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  max-height: 190px;
+  object-fit: contain;
+}
+
+    header h1 {
+      margin-bottom: 10px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-shadow: 3px 3px 0 #555555;
+    }
+
+    header p {
+      color: #dddddd;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 30px auto 50px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .tab-button {
+      padding: 13px 20px;
+      border: 2px solid var(--branco);
+      border-radius: 999px;
+      color: var(--branco);
+      background: var(--preto);
+      box-shadow: var(--sombra);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .tab-button:hover,
+    .tab-button.active {
+      color: var(--preto);
+      background: var(--branco);
+      transform: translateY(-3px);
+    }
+
+    .tab-content {
+      display: none;
+      animation: aparecer 0.35s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      margin-bottom: 24px;
+      padding: 25px;
+      background: var(--branco);
+      border: 2px solid #cccccc;
+      border-radius: 24px;
+      box-shadow: var(--sombra);
+    }
+
+    .card h2 {
+      margin-bottom: 12px;
+      color: var(--preto);
+    }
+
+    .card h3 {
+      margin: 18px 0 10px;
+      color: var(--preto);
+    }
+
+    .card p {
+      line-height: 1.7;
+    }
+
+    .intro-text {
+      margin-bottom: 12px;
+    }
+
+    .rules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .rule {
+      min-height: 160px;
+      padding: 18px;
+      color: var(--branco);
+      background: var(--preto-suave);
+      border-left: 5px solid var(--branco);
+      border-radius: 18px;
+    }
+
+    .rule strong {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--branco);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .rule span {
+      display: block;
+      color: #eeeeee;
+      line-height: 1.55;
+    }
+
+    .animal-grid,
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 18px;
+    }
+
+    .animal-card,
+    .member-card {
+      overflow: hidden;
+      text-align: center;
+      background: var(--branco);
+      border: 2px solid #cccccc;
+      border-radius: 22px;
+      box-shadow: var(--sombra);
+      transition: 0.25s ease;
+    }
+
+    .animal-card:hover,
+    .member-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .animal-card img,
+    .member-card img {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: var(--cinza-claro);
+
+      /*
+        As imagens permanecem coloridas.
+        Não há filtro grayscale aqui.
+      */
+    }
+
+    .clickable-image {
+      cursor: zoom-in;
+      transition: 0.25s ease;
+    }
+
+    .clickable-image:hover {
+      opacity: 0.82;
+      transform: scale(1.02);
+    }
+
+    .animal-card div,
+    .member-card div {
+      padding: 17px;
+    }
+
+    .animal-card h3,
+    .member-card h3 {
+      margin-bottom: 8px;
+      color: var(--preto);
+    }
+
+    .animal-card p,
+    .member-card p {
+      margin-bottom: 5px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .available {
+      color: var(--branco);
+      background: var(--preto);
+    }
+
+    .chosen {
+      color: var(--preto);
+      background: var(--cinza-claro);
+      border: 1px solid var(--preto);
+    }
+
+    .tiktok-button,
+    .commission-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 16px;
+      border: 2px solid var(--preto);
+      border-radius: 999px;
+      color: var(--branco);
+      background: var(--preto);
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.25s ease;
+    }
+
+    .tiktok-button:hover,
+    .commission-button:hover {
+      color: var(--preto);
+      background: var(--branco);
+    }
+
+    .member-role {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      color: var(--preto);
+      background: var(--branco);
+      border: 1px solid var(--preto);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .watermark-box {
+      padding: 35px 20px;
+      text-align: center;
+      color: var(--branco);
+      background: var(--preto);
+      border: 3px solid var(--branco);
+      border-radius: 24px;
+    }
+
+    .watermark-box h2 {
+      color: var(--branco);
+    }
+
+    .watermark-box p {
+      color: var(--branco);
+    }
+
+    .watermark-icon {
+      margin-bottom: 15px;
+      font-size: 2.5rem;
+    }
+
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: var(--branco);
+      background: var(--preto);
+      border-top: 3px solid var(--branco);
+    }
+
+    /*
+      Modal da imagem
+    */
+
+    .image-modal {
+      width: min(92vw, 950px);
+      max-width: 950px;
+      max-height: 92vh;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid var(--branco);
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.96);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    .image-modal::backdrop {
+      background: rgba(0, 0, 0, 0.86);
+    }
+
+    .modal-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      padding: 55px 20px 20px;
+    }
+
+    .modal-image {
+      display: block;
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--branco);
+      border-radius: 50%;
+      color: var(--branco);
+      background: var(--preto);
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+      color: var(--preto);
+      background: var(--branco);
+      outline: none;
+    }
+
+    .modal-caption {
+      padding: 0 20px 20px;
+      text-align: center;
+      color: var(--branco);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 550px) {
+      header {
+        padding: 30px 15px 35px;
+      }
+
+      .card {
+        padding: 19px;
+      }
+
+      .tab-button {
+        width: 100%;
+      }
+
+      .animal-card img,
+      .member-card img {
+        height: 250px;
+      }
+
+      .rules {
+        grid-template-columns: 1fr;
+      }
+
+      .image-modal {
+        width: 96vw;
+      }
+
+      .modal-content {
+        padding: 58px 10px 15px;
+      }
+
+      .modal-image {
+        max-height: 70vh;
+      }
+    }
+  </style>
+</head>
+<header>
+  <div class="watermark-top">
+    <img
+      src="marca-agua.png"
+      alt="Marca d'água da Turminha Animal">
+  </div>
+
+  <h1>Turminha Animal</h1>
+
+  <p>
+    Um grupo especial de OCs, animais e criatividade
+  </p>
+</header>
+
+  <main class="container">
+
+    <nav class="tabs" aria-label="Navegação principal">
+      <button
+        class="tab-button active"
+        data-tab="catalogo">
+        Catálogo
+      </button>
+
+      <button
+        class="tab-button"
+        data-tab="membros">
+        OCs dos membros
+      </button>
+
+      <button
+        class="tab-button"
+        data-tab="marca">
+        Marca d'água
+      </button>
+    </nav>
+
+    <!-- ABA DO CATÁLOGO -->
+    <section id="catalogo" class="tab-content active">
+
+      <div class="card">
+        <h2>Sobre a Turminha Animal</h2>
+
+        <p class="intro-text">
+          A Turminha Animal é um grupo criado para reunir membros que possuem
+          suas próprias OCs baseadas em animais.
+        </p>
+
+        <p class="intro-text">
+          Cada participante escolhe um animal disponível e pode participar dos
+          conteúdos da Turminha.
+        </p>
+
+        <p class="intro-text">
+          Acompanhe os vídeos, novidades e participações no TikTok:
+        </p>
+
+        <a
+  class="tiktok-button"
+  href="https://www.tiktok.com/@_.noah._.star._"
+  target="_blank"
+  rel="noopener noreferrer">
+  Acessar TikTok do Noah
+</a>
+      </div>
+
+      <div class="card">
+        <h2>🐾 Regras da Turminha Animal</h2>
+
+        <p>
+          Para manter a brincadeira organizada, segura e respeitosa, siga as
+          regras abaixo:
+        </p>
+
+        <div class="rules">
+
+          <div class="rule">
+            <strong>🐶 1. Não escolher animal repetido</strong>
+            <span>
+              Escolha apenas animais que ainda estejam disponíveis. Evite
+              repetir o animal escolhido por outro membro.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🎨 2. Não copiar a OC de outra pessoa</strong>
+            <span>
+              Cada personagem deve possuir sua própria identidade visual. Não
+              copie a aparência ou o conceito da OC de outro participante.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>💧 3. Não remover a marca d'água</strong>
+            <span>
+              A marca d'água identifica o trabalho artístico realizado e não
+              deve ser removida.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🔐 4. Não usar a OC sem autorização</strong>
+            <span>
+              Peça permissão antes de utilizar a personagem de outro membro.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🤝 5. Não causar brigas</strong>
+            <span>
+              Trate todos os integrantes com respeito e educação. Discussões,
+              provocações e conflitos desnecessários não serão permitidos.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>✏️ 6. Não alterar a arte de outra pessoa</strong>
+            <span>
+              Não edite, redesenhe ou modifique a OC ou a arte de outro
+              participante sem autorização do dono.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🔒 7. Não divulgar informações pessoais</strong>
+            <span>
+              Proteja sua privacidade e a privacidade dos outros participantes.
+              Não compartilhe informações pessoais de ninguém.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🚫 8. Não falar sobre sua vida pessoal</strong>
+            <span>
+              Evite compartilhar detalhes pessoais, familiares ou outras
+              informações privadas dentro da Turminha.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>💰 9. Não vender as artes sem permissão</strong>
+            <span>
+              As artes da Turminha não podem ser vendidas, comercializadas ou
+              utilizadas para ganhar dinheiro sem a autorização do dono da arte.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🐾 10. Marca d'água exclusiva para membros</strong>
+            <span>
+              Pessoas que não fazem parte da Turminha não podem utilizar a
+              marca d'água oficial do grupo.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🔞 11. Conteúdo 18+ não é permitido</strong>
+            <span>
+              Não permitimos conteúdo sexual, explícito ou impróprio para
+              menores de idade.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>🔞 12. Idade mínima de 17 anos</strong>
+            <span>
+              A participação na Turminha é permitida somente para pessoas com
+              17 anos ou mais.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>💕 13. Não ficar dando em cima dos outros membros</strong>
+            <span>
+              Respeite os limites dos outros participantes. Não fique
+              insistindo, flertando ou dando em cima de alguém que não
+              demonstrou interesse.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>⚠️ 14. Quebra das regras</strong>
+            <span>
+              O descumprimento das regras poderá resultar em banimento da
+              Turminha. Dependendo da gravidade, o membro também poderá ser
+              marcado ou denunciado para outros grupos ou turmas, especialmente
+              em casos graves que coloquem outras pessoas em risco.
+            </span>
+          </div>
+
+        </div>
+
+        <p style="margin-top: 22px;">
+          A Turminha foi criada pensando principalmente em um espaço para
+          adolescentes mais velhos e adultos. Muitas turminhas acabam recusando
+          pessoas maiores de idade por serem voltadas apenas para menores,
+          então aqui queremos proporcionar um espaço em que pessoas com
+          17 anos ou mais também possam participar, desde que respeitem todas
+          as regras.
+        </p>
+
+        <p style="margin-top: 15px;">
+          Ao participar da Turminha Animal, você concorda em respeitar todos os
+          membros e seguir essas regras. 🐾❤️
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Animais disponíveis</h2>
+
+        <p>
+          Estes animais ainda podem ser escolhidos por novos membros:
+        </p>
+
+        <div class="animal-grid">
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="https://placehold.co/600x400/eeeeee/111111?text=Gato"
+              alt="Imagem ilustrativa de um gato"
+              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Gato"
+              data-caption="Gato — animal disponível">
+
+            <div>
+              <h3>Gato</h3>
+
+              <span class="status available">
+                Disponível
+              </span>
+            </div>
+          </article>
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="https://placehold.co/600x400/eeeeee/111111?text=Coelho"
+              alt="Imagem ilustrativa de um coelho"
+              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Coelho"
+              data-caption="Coelho — animal disponível">
+
+            <div>
+              <h3>Coelho</h3>
+
+              <span class="status available">
+                Disponível
+              </span>
+            </div>
+          </article>
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="https://placehold.co/600x400/eeeeee/111111?text=Raposa"
+              alt="Imagem ilustrativa de uma raposa"
+              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Raposa"
+              data-caption="Raposa — animal disponível">
+
+            <div>
+              <h3>Raposa</h3>
+
+              <span class="status available">
+                Disponível
+              </span>
+            </div>
+          </article>
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="https://placehold.co/600x400/eeeeee/111111?text=Gato+do+mato"
+              alt="Imagem ilustrativa de um gato do mato"
+              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Gato+do+mato"
+              data-caption="Gato do mato — animal disponível">
+
+            <div>
+              <h3>Gato do mato</h3>
+
+              <span class="status available">
+                Disponível
+              </span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Animais já escolhidos</h2>
+
+        <p>
+          Estes animais já pertencem a membros da Turminha:
+        </p>
+
+        <div class="animal-grid">
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="noah-urso.png"
+              alt="OC de Noah, representada por um urso"
+              data-full-image="noah-urso.png"
+              data-caption="Noah — Urso">
+
+            <div>
+              <h3>Urso — Noah</h3>
+
+              <span class="status chosen">
+                Já escolhido
+              </span>
+            </div>
+          </article>
+
+          <article class="animal-card">
+            <img
+              class="clickable-image"
+              src="max-lobo.png"
+              alt="OC de Max, representada por um lobo"
+              data-full-image="max-lobo.png"
+              data-caption="Max — Lobo">
+
+            <div>
+              <h3>Lobo — Max</h3>
+
+              <span class="status chosen">
+                Já escolhido
+              </span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ABA DOS MEMBROS -->
+    <section id="membros" class="tab-content">
+
+      <div class="card">
+        <h2>OCs dos membros</h2>
+
+        <p>
+          Clique em uma imagem para visualizá-la em tamanho maior.
+        </p>
+
+        <div class="member-grid">
+
+          <!-- NOAH -->
+          <article class="member-card">
+            <img
+              class="clickable-image"
+              src="noah-urso.png"
+              alt="OC de Noah, um urso"
+              data-full-image="noah-urso.png"
+              data-caption="Noah — Urso">
+
+            <div>
+              <h3>Noah</h3>
+
+              <p>Urso</p>
+
+              <span class="member-role">
+                Dono do grupo
+              </span>
+
+              <br>
+
+              <a
+                class="tiktok-button"
+                href="https://www.tiktok.com/@_.noah._.star._"
+                target="_blank"
+                rel="noopener noreferrer">
+                Ver TikTok do Noah
+              </a>
+            </div>
+          </article>
+
+          <!-- MAX -->
+          <article class="member-card">
+            <img
+              class="clickable-image"
+              src="max-lobo.png"
+              alt="OC de Max, um lobo"
+              data-full-image="max-lobo.png"
+              data-caption="Max — Lobo">
+
+            <div>
+              <h3>Max</h3>
+
+              <p>Lobo</p>
+
+              <a
+                class="tiktok-button"
+                href="https://www.tiktok.com/@dicasgacha"
+                target="_blank"
+                rel="noopener noreferrer">
+                Ver TikTok do Max
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ABA DA MARCA D'ÁGUA -->
+    <section id="marca" class="tab-content">
+
+      <div class="card">
+        <div class="watermark-box">
+
+          <div class="watermark-icon">
+            MARCA D'ÁGUA
+          </div>
+
+          <h2>Quem fez a marca d'água?</h2>
+
+          <p>
+            A marca d'água da Turminha Animal foi feita por
+            <strong>Mih Estelar</strong>.
+          </p>
+
+          <p style="margin-top: 12px;">
+            A marca d'água é destinada exclusivamente aos membros autorizados
+            da Turminha.
+          </p>
+
+          <p style="margin-top: 12px;">
+            Para conhecer o trabalho, as artes e as comissões, acesse o site:
+          </p>
+
+          <a
+            class="commission-button"
+            href="https://mih-estelar.github.io/comiss-es/"
+            target="_blank"
+            rel="noopener noreferrer">
+            Visitar comissões da Mih Estelar
+          </a>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Turminha Animal — feito com carinho para os membros
+    </p>
+  </footer>
+
+  <!-- MODAL PARA AMPLIAR AS IMAGENS -->
+  <dialog
+    class="image-modal"
+    id="imageModal"
+    aria-labelledby="modalCaption">
+
+    <div class="modal-content">
+      <button
+        class="modal-close"
+        id="modalClose"
+        type="button"
+        aria-label="Fechar imagem">
+        ×
+      </button>
+
+      <img
+        class="modal-image"
+        id="modalImage"
+        src=""
+        alt="Imagem ampliada">
+
+    </div>
+
+    <p
+      class="modal-caption"
+      id="modalCaption">
+    </p>
+  </dialog>
+
+  <script>
+    const botoes = document.querySelectorAll(".tab-button");
+    const abas = document.querySelectorAll(".tab-content");
+
+    botoes.forEach((botao) => {
+      botao.addEventListener("click", () => {
+        const abaSelecionada = botao.dataset.tab;
+
+        botoes.forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        abas.forEach((aba) => {
+          aba.classList.remove("active");
+        });
+
+        botao.classList.add("active");
+
+        document
+          .getElementById(abaSelecionada)
+          .classList.add("active");
+      });
+    });
+
+    const imageModal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalCaption = document.getElementById("modalCaption");
+    const modalClose = document.getElementById("modalClose");
+    const imagensClicaveis = document.querySelectorAll(".clickable-image");
+
+    let imagemQueAbriuModal = null;
+
+    imagensClicaveis.forEach((imagem) => {
+      imagem.addEventListener("click", () => {
+        imagemQueAbriuModal = imagem;
+
+        const imagemMaior =
+          imagem.dataset.fullImage || imagem.src;
+
+        const legenda =
+          imagem.dataset.caption || imagem.alt;
+
+        modalImage.src = imagemMaior;
+        modalImage.alt = imagem.alt;
+        modalCaption.textContent = legenda;
+
+        imageModal.showModal();
+        modalClose.focus();
+      });
+    });
+
+    function fecharModal() {
+      imageModal.close();
+
+      if (imagemQueAbriuModal) {
+        imagemQueAbriuModal.focus();
+      }
+    }
+
+    modalClose.addEventListener("click", fecharModal);
+
+    imageModal.addEventListener("click", (evento) => {
+      if (evento.target === imageModal) {
+        fecharModal();
+      }
+    });
+
+    imageModal.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape") {
+        evento.preventDefault();
+        fecharModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
