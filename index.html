@@ -8,15 +8,18 @@
 
   <style>
     :root {
-      --preto: #000000;
-      --preto-suave: #111111;
-      --cinza-escuro: #292929;
-      --cinza: #777777;
-      --cinza-claro: #dddddd;
-      --cinza-fundo: #f2f2f2;
       --branco: #ffffff;
-      --texto: #111111;
-      --sombra: 0 8px 20px rgba(0, 0, 0, 0.25);
+      --branco-suave: #fafafa;
+      --cinza-muito-claro: #f0f0f0;
+      --cinza-claro: #dddddd;
+      --cinza: #999999;
+      --cinza-escuro: #666666;
+      --texto: #3f3f3f;
+      --texto-suave: #666666;
+      --borda: #d2d2d2;
+      --vermelho-suave: #f1caca;
+      --vermelho-texto: #7c2525;
+      --sombra: 0 8px 20px rgba(90, 90, 90, 0.18);
     }
 
     * {
@@ -34,55 +37,55 @@
       font-family: Arial, Helvetica, sans-serif;
       color: var(--texto);
       background:
-        radial-gradient(circle at top left, #555555 0, transparent 30%),
-        linear-gradient(135deg, #000000, #292929);
+        radial-gradient(circle at top left, #ffffff 0, transparent 35%),
+        linear-gradient(135deg, #eeeeee, #ffffff);
     }
 
     header {
       padding: 34px 20px 38px;
       text-align: center;
-      color: var(--branco);
-      background: linear-gradient(135deg, #000000, #333333);
-      border-bottom: 4px solid var(--branco);
+      color: var(--texto);
+      background: linear-gradient(135deg, #ffffff, #dddddd);
+      border-bottom: 4px solid var(--cinza);
       border-bottom-left-radius: 35px;
       border-bottom-right-radius: 35px;
       box-shadow: var(--sombra);
     }
-.watermark-top {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: min(260px, 80vw);
-  min-height: 80px;
-  margin-bottom: 20px;
-  padding: 10px 18px;
-  background: var(--branco);
-  border: 2px solid var(--branco);
-  border-radius: 18px;
-  box-shadow: var(--sombra);
-}
 
-.watermark-top img {
-  display: block;
-  width: 100%;
-  max-width: 220px;
-  max-height: 190px;
-  object-fit: contain;
-}
+    .watermark-top {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: min(580px, 94vw);
+      min-height: 210px;
+      margin-bottom: 18px;
+      background: transparent;
+      border: none;
+    }
+
+    .watermark-top img {
+      display: block;
+      width: 100%;
+      max-width: 560px;
+      max-height: 250px;
+      object-fit: contain;
+      background: transparent;
+    }
 
     header h1 {
       margin-bottom: 10px;
+      color: var(--texto);
       font-size: clamp(2rem, 6vw, 4rem);
-      text-shadow: 3px 3px 0 #555555;
+      text-shadow: 2px 2px 0 var(--branco);
     }
 
     header p {
-      color: #dddddd;
+      color: var(--texto-suave);
       font-size: 1.1rem;
     }
 
     .container {
-      width: min(1100px, 92%);
+      width: min(1150px, 92%);
       margin: 30px auto 50px;
     }
 
@@ -96,10 +99,10 @@
 
     .tab-button {
       padding: 13px 20px;
-      border: 2px solid var(--branco);
+      color: var(--texto);
+      background: var(--branco);
+      border: 2px solid var(--cinza);
       border-radius: 999px;
-      color: var(--branco);
-      background: var(--preto);
       box-shadow: var(--sombra);
       font-size: 1rem;
       font-weight: bold;
@@ -109,8 +112,9 @@
 
     .tab-button:hover,
     .tab-button.active {
-      color: var(--preto);
-      background: var(--branco);
+      color: var(--branco);
+      background: var(--cinza-escuro);
+      border-color: var(--cinza-escuro);
       transform: translateY(-3px);
     }
 
@@ -138,20 +142,20 @@
     .card {
       margin-bottom: 24px;
       padding: 25px;
-      background: var(--branco);
-      border: 2px solid #cccccc;
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid var(--borda);
       border-radius: 24px;
       box-shadow: var(--sombra);
     }
 
     .card h2 {
       margin-bottom: 12px;
-      color: var(--preto);
+      color: var(--texto);
     }
 
     .card h3 {
       margin: 18px 0 10px;
-      color: var(--preto);
+      color: var(--texto);
     }
 
     .card p {
@@ -172,28 +176,29 @@
     .rule {
       min-height: 160px;
       padding: 18px;
-      color: var(--branco);
-      background: var(--preto-suave);
-      border-left: 5px solid var(--branco);
+      color: var(--texto);
+      background: var(--cinza-muito-claro);
+      border-left: 5px solid var(--cinza-escuro);
       border-radius: 18px;
     }
 
     .rule strong {
       display: block;
       margin-bottom: 9px;
-      color: var(--branco);
+      color: var(--texto);
       font-size: 1rem;
       line-height: 1.4;
     }
 
     .rule span {
       display: block;
-      color: #eeeeee;
+      color: var(--texto-suave);
       line-height: 1.55;
     }
 
     .animal-grid,
-    .member-grid {
+    .member-grid,
+    .removed-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
@@ -201,18 +206,20 @@
     }
 
     .animal-card,
-    .member-card {
+    .member-card,
+    .removed-card {
       overflow: hidden;
       text-align: center;
       background: var(--branco);
-      border: 2px solid #cccccc;
+      border: 2px solid var(--borda);
       border-radius: 22px;
       box-shadow: var(--sombra);
       transition: 0.25s ease;
     }
 
     .animal-card:hover,
-    .member-card:hover {
+    .member-card:hover,
+    .removed-card:hover {
       transform: translateY(-5px);
     }
 
@@ -223,11 +230,6 @@
       height: 220px;
       object-fit: cover;
       background: var(--cinza-claro);
-
-      /*
-        As imagens permanecem coloridas.
-        Não há filtro grayscale aqui.
-      */
     }
 
     .clickable-image {
@@ -241,18 +243,21 @@
     }
 
     .animal-card div,
-    .member-card div {
+    .member-card div,
+    .removed-card div {
       padding: 17px;
     }
 
     .animal-card h3,
-    .member-card h3 {
+    .member-card h3,
+    .removed-card h3 {
       margin-bottom: 8px;
-      color: var(--preto);
+      color: var(--texto);
     }
 
     .animal-card p,
-    .member-card p {
+    .member-card p,
+    .removed-card p {
       margin-bottom: 5px;
     }
 
@@ -266,13 +271,19 @@
 
     .available {
       color: var(--branco);
-      background: var(--preto);
+      background: var(--cinza-escuro);
     }
 
     .chosen {
-      color: var(--preto);
+      color: var(--texto);
       background: var(--cinza-claro);
-      border: 1px solid var(--preto);
+      border: 1px solid var(--cinza-escuro);
+    }
+
+    .removed-status {
+      color: var(--vermelho-texto);
+      background: var(--vermelho-suave);
+      border: 1px solid #b96565;
     }
 
     .tiktok-button,
@@ -280,10 +291,10 @@
       display: inline-block;
       margin-top: 10px;
       padding: 10px 16px;
-      border: 2px solid var(--preto);
-      border-radius: 999px;
       color: var(--branco);
-      background: var(--preto);
+      background: var(--cinza-escuro);
+      border: 2px solid var(--cinza-escuro);
+      border-radius: 999px;
       text-decoration: none;
       font-weight: bold;
       transition: 0.25s ease;
@@ -291,7 +302,7 @@
 
     .tiktok-button:hover,
     .commission-button:hover {
-      color: var(--preto);
+      color: var(--texto);
       background: var(--branco);
     }
 
@@ -299,29 +310,74 @@
       display: inline-block;
       margin-top: 8px;
       padding: 5px 10px;
-      color: var(--preto);
-      background: var(--branco);
-      border: 1px solid var(--preto);
+      color: var(--texto);
+      background: var(--cinza-muito-claro);
+      border: 1px solid var(--cinza-escuro);
       border-radius: 999px;
       font-size: 0.85rem;
       font-weight: bold;
     }
 
+    .animals-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .animal-option {
+      padding: 15px;
+      text-align: center;
+      border: 2px solid var(--borda);
+      border-radius: 16px;
+      background: var(--branco);
+      font-weight: bold;
+    }
+
+    .animal-option.locked {
+      color: #777777;
+      background: #e2e2e2;
+    }
+
+    .animal-option.unlocked {
+      color: #3c633c;
+      background: #e5f1e5;
+    }
+
+    .selection-rules {
+      margin-top: 18px;
+      padding: 20px;
+      color: var(--texto);
+      background: var(--cinza-muito-claro);
+      border-left: 5px solid var(--cinza-escuro);
+      border-radius: 16px;
+    }
+
+    .selection-rules ul {
+      margin-top: 10px;
+      padding-left: 22px;
+    }
+
+    .selection-rules li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
     .watermark-box {
       padding: 35px 20px;
       text-align: center;
-      color: var(--branco);
-      background: var(--preto);
-      border: 3px solid var(--branco);
+      color: var(--texto);
+      background: var(--cinza-muito-claro);
+      border: 3px solid var(--cinza);
       border-radius: 24px;
     }
 
     .watermark-box h2 {
-      color: var(--branco);
+      color: var(--texto);
     }
 
     .watermark-box p {
-      color: var(--branco);
+      color: var(--texto);
     }
 
     .watermark-icon {
@@ -329,17 +385,42 @@
       font-size: 2.5rem;
     }
 
+    .removed-card {
+      padding: 22px;
+      text-align: left;
+      border-left: 6px solid #a44a4a;
+    }
+
+    .removed-card h3 {
+      margin-top: 0;
+    }
+
+    .removed-card .reason {
+      padding: 12px;
+      color: #6e2929;
+      background: #f9e1e1;
+      border-radius: 12px;
+      line-height: 1.55;
+    }
+
+    .removed-notice {
+      padding: 18px;
+      color: var(--texto);
+      background: #eeeeee;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      line-height: 1.6;
+    }
+
     footer {
       padding: 25px;
       text-align: center;
-      color: var(--branco);
-      background: var(--preto);
-      border-top: 3px solid var(--branco);
+      color: var(--texto);
+      background: var(--cinza-claro);
+      border-top: 3px solid var(--cinza-escuro);
     }
 
-    /*
-      Modal da imagem
-    */
+    /* Modal para ampliar imagens */
 
     .image-modal {
       width: min(92vw, 950px);
@@ -347,14 +428,14 @@
       max-height: 92vh;
       padding: 0;
       overflow: hidden;
-      border: 2px solid var(--branco);
+      background: rgba(255, 255, 255, 0.98);
+      border: 2px solid var(--cinza-escuro);
       border-radius: 18px;
-      background: rgba(0, 0, 0, 0.96);
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
     }
 
     .image-modal::backdrop {
-      background: rgba(0, 0, 0, 0.86);
+      background: rgba(70, 70, 70, 0.72);
     }
 
     .modal-content {
@@ -381,10 +462,10 @@
       z-index: 2;
       width: 42px;
       height: 42px;
-      border: 2px solid var(--branco);
-      border-radius: 50%;
       color: var(--branco);
-      background: var(--preto);
+      background: var(--cinza-escuro);
+      border: 2px solid var(--cinza-escuro);
+      border-radius: 50%;
       font-size: 1.8rem;
       line-height: 1;
       cursor: pointer;
@@ -393,7 +474,7 @@
 
     .modal-close:hover,
     .modal-close:focus {
-      color: var(--preto);
+      color: var(--texto);
       background: var(--branco);
       outline: none;
     }
@@ -401,13 +482,23 @@
     .modal-caption {
       padding: 0 20px 20px;
       text-align: center;
-      color: var(--branco);
+      color: var(--texto);
       font-size: 1rem;
     }
 
     @media (max-width: 550px) {
       header {
         padding: 30px 15px 35px;
+      }
+
+      .watermark-top {
+        width: 94vw;
+        min-height: 150px;
+      }
+
+      .watermark-top img {
+        max-width: 92vw;
+        max-height: 180px;
       }
 
       .card {
@@ -441,40 +532,55 @@
     }
   </style>
 </head>
-<header>
-  <div class="watermark-top">
-    <img
-      src="marca-agua.png"
-      alt="Marca d'água da Turminha Animal">
-  </div>
 
-  <h1>Turminha Animal</h1>
+<body>
 
-  <p>
-    Um grupo especial de OCs, animais e criatividade
-  </p>
-</header>
+  <header>
+    <div class="watermark-top">
+      <img
+        src="marca-agua.png"
+        alt="Marca d'água da Turminha Animal">
+    </div>
+
+    <h1>Turminha Animal</h1>
+
+    <p>
+      Um grupo especial de OCs, animais e criatividade
+    </p>
+  </header>
 
   <main class="container">
 
     <nav class="tabs" aria-label="Navegação principal">
+
       <button
+        type="button"
         class="tab-button active"
         data-tab="catalogo">
         Catálogo
       </button>
 
       <button
+        type="button"
         class="tab-button"
         data-tab="membros">
         OCs dos membros
       </button>
 
       <button
+        type="button"
+        class="tab-button"
+        data-tab="removidos">
+        Removidos
+      </button>
+
+      <button
+        type="button"
         class="tab-button"
         data-tab="marca">
         Marca d'água
       </button>
+
     </nav>
 
     <!-- ABA DO CATÁLOGO -->
@@ -498,12 +604,12 @@
         </p>
 
         <a
-  class="tiktok-button"
-  href="https://www.tiktok.com/@_.noah._.star._"
-  target="_blank"
-  rel="noopener noreferrer">
-  Acessar TikTok do Noah
-</a>
+          class="tiktok-button"
+          href="https://www.tiktok.com/@_.noah._.star._"
+          target="_blank"
+          rel="noopener noreferrer">
+          Acessar TikTok do Noah
+        </a>
       </div>
 
       <div class="card">
@@ -596,7 +702,7 @@
           </div>
 
           <div class="rule">
-            <strong>🔞 11. Conteúdo 18+ não é permitido</strong>
+            <strong>🔞 11. Conteúdo +18 não é permitido</strong>
             <span>
               Não permitimos conteúdo sexual, explícito ou impróprio para
               menores de idade.
@@ -621,7 +727,16 @@
           </div>
 
           <div class="rule">
-            <strong>⚠️ 14. Quebra das regras</strong>
+            <strong>📱 14. Não spammar figurinhas sem motivo</strong>
+            <span>
+              Evite enviar várias figurinhas seguidas ou ficar spammando
+              figurinhas sem necessidade. Use-as de forma moderada para não
+              atrapalhar a conversa.
+            </span>
+          </div>
+
+          <div class="rule">
+            <strong>⚠️ 15. Quebra das regras</strong>
             <span>
               O descumprimento das regras poderá resultar em banimento da
               Turminha. Dependendo da gravidade, o membro também poderá ser
@@ -635,95 +750,84 @@
         <p style="margin-top: 22px;">
           A Turminha foi criada pensando principalmente em um espaço para
           adolescentes mais velhos e adultos. Muitas turminhas acabam recusando
-          pessoas maiores de idade por serem voltadas apenas para menores,
-          então aqui queremos proporcionar um espaço em que pessoas com
+          pessoas maiores de idade por serem voltadas apenas para menores.
+          Por isso, queremos proporcionar um espaço em que pessoas com
           17 anos ou mais também possam participar, desde que respeitem todas
           as regras.
         </p>
 
         <p style="margin-top: 15px;">
           Ao participar da Turminha Animal, você concorda em respeitar todos os
-          membros e seguir essas regras. 🐾❤️
+          membros e seguir todas as regras. 🐾❤️
         </p>
       </div>
 
       <div class="card">
-        <h2>Animais disponíveis</h2>
+        <h2>🐾 Animais disponíveis</h2>
 
-        <p>
-          Estes animais ainda podem ser escolhidos por novos membros:
+        <div class="animals-list">
+
+          <div class="animal-option locked">
+            🔒 Lobo
+          </div>
+
+          <div class="animal-option locked">
+            🔒 Urso-pardo
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Gato
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Raposa
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Onça
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Leopardo
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Cachorro
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Vaca/Boi
+          </div>
+
+          <div class="animal-option unlocked">
+            🔓 Urso de outra raça
+          </div>
+
+        </div>
+
+        <p style="margin-top: 20px;">
+          💡 Pode sugerir outro animal se quiser!
         </p>
+      </div>
 
-        <div class="animal-grid">
+      <div class="card">
+        <h2>📌 Regras para escolher o animal</h2>
 
-          <article class="animal-card">
-            <img
-              class="clickable-image"
-              src="https://placehold.co/600x400/eeeeee/111111?text=Gato"
-              alt="Imagem ilustrativa de um gato"
-              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Gato"
-              data-caption="Gato — animal disponível">
+        <div class="selection-rules">
+          <ul>
+            <li>
+              Cada pessoa pode escolher apenas 1 animal.
+            </li>
 
-            <div>
-              <h3>Gato</h3>
+            <li>
+              Se for o mesmo animal, mas de raça diferente, podemos abrir uma
+              exceção.
+            </li>
 
-              <span class="status available">
-                Disponível
-              </span>
-            </div>
-          </article>
-
-          <article class="animal-card">
-            <img
-              class="clickable-image"
-              src="https://placehold.co/600x400/eeeeee/111111?text=Coelho"
-              alt="Imagem ilustrativa de um coelho"
-              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Coelho"
-              data-caption="Coelho — animal disponível">
-
-            <div>
-              <h3>Coelho</h3>
-
-              <span class="status available">
-                Disponível
-              </span>
-            </div>
-          </article>
-
-          <article class="animal-card">
-            <img
-              class="clickable-image"
-              src="https://placehold.co/600x400/eeeeee/111111?text=Raposa"
-              alt="Imagem ilustrativa de uma raposa"
-              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Raposa"
-              data-caption="Raposa — animal disponível">
-
-            <div>
-              <h3>Raposa</h3>
-
-              <span class="status available">
-                Disponível
-              </span>
-            </div>
-          </article>
-
-          <article class="animal-card">
-            <img
-              class="clickable-image"
-              src="https://placehold.co/600x400/eeeeee/111111?text=Gato+do+mato"
-              alt="Imagem ilustrativa de um gato do mato"
-              data-full-image="https://placehold.co/1200x800/eeeeee/111111?text=Gato+do+mato"
-              data-caption="Gato do mato — animal disponível">
-
-            <div>
-              <h3>Gato do mato</h3>
-
-              <span class="status available">
-                Disponível
-              </span>
-            </div>
-          </article>
-
+            <li>
+              Confira se o animal ainda está disponível antes de escolher! 🐾
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -740,12 +844,12 @@
             <img
               class="clickable-image"
               src="noah-urso.png"
-              alt="OC de Noah, representada por um urso"
+              alt="OC de Noah, representada por um urso-pardo"
               data-full-image="noah-urso.png"
-              data-caption="Noah — Urso">
+              data-caption="Noah — Urso-pardo">
 
             <div>
-              <h3>Urso — Noah</h3>
+              <h3>Urso-pardo — Noah</h3>
 
               <span class="status chosen">
                 Já escolhido
@@ -787,19 +891,18 @@
 
         <div class="member-grid">
 
-          <!-- NOAH -->
           <article class="member-card">
             <img
               class="clickable-image"
               src="noah-urso.png"
-              alt="OC de Noah, um urso"
+              alt="OC de Noah, um urso-pardo"
               data-full-image="noah-urso.png"
-              data-caption="Noah — Urso">
+              data-caption="Noah — Urso-pardo">
 
             <div>
               <h3>Noah</h3>
 
-              <p>Urso</p>
+              <p>Urso-pardo</p>
 
               <span class="member-role">
                 Dono do grupo
@@ -817,7 +920,6 @@
             </div>
           </article>
 
-          <!-- MAX -->
           <article class="member-card">
             <img
               class="clickable-image"
@@ -846,6 +948,37 @@
 
     </section>
 
+    <!-- ABA DE REMOVIDOS -->
+    <section id="removidos" class="tab-content">
+
+      <div class="card">
+        <h2>🚫 Pessoas removidas da Turminha</h2>
+
+        <div class="removed-notice">
+          Esta aba registra pessoas que foram removidas da Turminha e os
+          respectivos motivos. Utilize informações objetivas, verdadeiras e
+          necessárias. Evite divulgar dados pessoais.
+        </div>
+
+        <div class="removed-grid">
+
+          <article class="removed-card">
+            <h3>Nenhuma pessoa registrada</h3>
+
+            <p class="reason">
+              Até o momento, não há nenhuma pessoa registrada nesta lista.
+            </p>
+
+            <span class="status removed-status">
+              Lista atualizada
+            </span>
+          </article>
+
+        </div>
+      </div>
+
+    </section>
+
     <!-- ABA DA MARCA D'ÁGUA -->
     <section id="marca" class="tab-content">
 
@@ -853,7 +986,7 @@
         <div class="watermark-box">
 
           <div class="watermark-icon">
-            MARCA D'ÁGUA
+            🐾
           </div>
 
           <h2>Quem fez a marca d'água?</h2>
@@ -893,13 +1026,14 @@
     </p>
   </footer>
 
-  <!-- MODAL PARA AMPLIAR AS IMAGENS -->
+  <!-- MODAL DAS IMAGENS -->
   <dialog
     class="image-modal"
     id="imageModal"
     aria-labelledby="modalCaption">
 
     <div class="modal-content">
+
       <button
         class="modal-close"
         id="modalClose"
@@ -920,31 +1054,40 @@
       class="modal-caption"
       id="modalCaption">
     </p>
+
   </dialog>
 
   <script>
-    const botoes = document.querySelectorAll(".tab-button");
-    const abas = document.querySelectorAll(".tab-content");
+    const botoesAbas = document.querySelectorAll(".tab-button");
+    const conteudosAbas = document.querySelectorAll(".tab-content");
 
-    botoes.forEach((botao) => {
+    function abrirAba(nomeDaAba) {
+      botoesAbas.forEach((botao) => {
+        const botaoAtivo = botao.dataset.tab === nomeDaAba;
+
+        botao.classList.toggle("active", botaoAtivo);
+        botao.setAttribute("aria-selected", botaoAtivo);
+      });
+
+      conteudosAbas.forEach((conteudo) => {
+        const conteudoAtivo = conteudo.id === nomeDaAba;
+
+        conteudo.classList.toggle("active", conteudoAtivo);
+        conteudo.hidden = !conteudoAtivo;
+      });
+    }
+
+    botoesAbas.forEach((botao) => {
       botao.addEventListener("click", () => {
-        const abaSelecionada = botao.dataset.tab;
-
-        botoes.forEach((item) => {
-          item.classList.remove("active");
-        });
-
-        abas.forEach((aba) => {
-          aba.classList.remove("active");
-        });
-
-        botao.classList.add("active");
-
-        document
-          .getElementById(abaSelecionada)
-          .classList.add("active");
+        abrirAba(botao.dataset.tab);
       });
     });
+
+    conteudosAbas.forEach((conteudo) => {
+      conteudo.hidden = !conteudo.classList.contains("active");
+    });
+
+    abrirAba("catalogo");
 
     const imageModal = document.getElementById("imageModal");
     const modalImage = document.getElementById("modalImage");
@@ -955,26 +1098,38 @@
     let imagemQueAbriuModal = null;
 
     imagensClicaveis.forEach((imagem) => {
-      imagem.addEventListener("click", () => {
+      imagem.setAttribute("tabindex", "0");
+      imagem.setAttribute("role", "button");
+
+      function abrirImagem() {
         imagemQueAbriuModal = imagem;
 
-        const imagemMaior =
+        modalImage.src =
           imagem.dataset.fullImage || imagem.src;
 
-        const legenda =
-          imagem.dataset.caption || imagem.alt;
-
-        modalImage.src = imagemMaior;
         modalImage.alt = imagem.alt;
-        modalCaption.textContent = legenda;
+
+        modalCaption.textContent =
+          imagem.dataset.caption || imagem.alt;
 
         imageModal.showModal();
         modalClose.focus();
+      }
+
+      imagem.addEventListener("click", abrirImagem);
+
+      imagem.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+          evento.preventDefault();
+          abrirImagem();
+        }
       });
     });
 
     function fecharModal() {
-      imageModal.close();
+      if (imageModal.open) {
+        imageModal.close();
+      }
 
       if (imagemQueAbriuModal) {
         imagemQueAbriuModal.focus();
@@ -989,11 +1144,9 @@
       }
     });
 
-    imageModal.addEventListener("keydown", (evento) => {
-      if (evento.key === "Escape") {
-        evento.preventDefault();
-        fecharModal();
-      }
+    imageModal.addEventListener("cancel", (evento) => {
+      evento.preventDefault();
+      fecharModal();
     });
   </script>
 
